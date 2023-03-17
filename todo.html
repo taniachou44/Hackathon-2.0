@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+    
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding-top: 10%;
+    background-color: bisque;
+  }
+  
+h1{
+    font-weight: bold;
+
+}
+
+  form {
+    margin-bottom: 20px;
+  }
+  
+  #taskInput {
+    padding: 10px;
+    font-size: 1rem;
+    width: 90%;
+    height: 100%;
+  }
+ 
+  #taskList {
+    list-style-type: upper-roman;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    padding: 1rem;
+    font-size: 1.2rem;
+  }
+  
+  .task {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  .task span {
+    flex-grow: 1;
+  }
+  
+  .task button {
+    background-color: #3dd60f;
+    color: rgb(0, 0, 0);
+    border-radius: 20px;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 0.5rem;
+  }
+
+.container{
+  margin-left: 30%;
+  margin-right: 29%;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    text-align: center;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    background-color: rgb(255, 212, 160);
+}
+
+form button{
+    font-size: 0.8rem;
+    background-color: rgb(172, 219, 231);
+    color: rgb(10, 10, 10);
+    border: none;
+    border-radius: 20px;
+    margin-left: 0.5rem;
+    /* width: 10%; */
+}
+
+.form-container{
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+    </style>
+</head>
+
+<body>
+    <h1>To-do List</h1>
+    <div class="container">
+        <form>
+            <div class="form-container">
+                <input type="text" id="taskInput" placeholder="Add a task">
+                <button type="button" class="bttn" onclick="addTask()">Add items</button>
+            </div>
+        </form>
+        <ul id="taskList"></ul>
+    </div>
+    <script >
+      function addTask() {
+    // Get the task input
+    var taskInput = document.getElementById("taskInput");
+    var task = taskInput.value;
+    // switch(task){
+    //     case taskInput=0:
+    //     addTask();
+    //     break;
+    // }
+  
+    // Create a new li element
+    var li = document.createElement("li");
+    li.className = "task";
+  
+    // Create a new span element
+    var span = document.createElement("span");
+    span.innerHTML = task;
+  
+    // Create a new delete button element
+    var deleteBtn = document.createElement("button");
+    deleteBtn.innerHTML = "Delete";
+    deleteBtn.onclick = deleteTask;
+  
+    //Create a new edit button element
+    var editBtn = document.createElement("button");
+    editBtn.innerHTML = "Edit";
+    editBtn.onclick = editTask;
+  
+    // Add the task and delete button to the li element
+    li.appendChild(span);
+    li.appendChild(editBtn);
+    li.appendChild(deleteBtn);
+  
+    // Add the li element to the task list
+    var taskList = document.getElementById("taskList");
+    taskList.appendChild(li);
+  
+    // Clear the task input
+    taskInput.value = "";
+  }
+  
+  function deleteTask(e) {
+    var task = e.target.parentElement;
+    var taskList = task.parentElement;
+    taskList.removeChild(task);
+  }
+  
+  function editTask(e){
+      var task = e.target.parentElement;
+      var input = document.createElement("input");
+      input.type = "text";
+      input.value = task.firstChild.innerHTML;
+      task.replaceChild(input, task.firstChild);
+      e.target.innerHTML = "Save";
+      e.target.onclick = saveTask;
+}
+      
+      function saveTask(e) {
+      var task = e.target.parentElement;
+      var input = task.firstChild;
+      var span = document.createElement("span");
+      span.innerHTML = input.value;
+      task.replaceChild(span, input);
+      e.target.innerHTML = "Edit";
+      e.target.onclick = editTask;
+} 
+    </script>
+</body>
+
+</html>
